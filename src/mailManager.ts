@@ -18,13 +18,15 @@ const sendEmail = async (
     sortedFriend:{
         origin: FriendsDataWithId,
         selected: FriendsDataWithId
-    }
+    },
+    eventDate: string,
+    eventName: string
 ) =>{
     try{
         const mailOptions = {
-            from: 'SecretSanta Raffle <ENTER HERE THE EMAIL REGISTERED ON GOOGLE CLOUD PLATFORM FOR OAUTH>',
+            from: `SecretSanta Raffle '${eventName}' <ENTER HERE THE EMAIL REGISTERED ON GOOGLE CLOUD PLATFORM FOR OAUTH>`,
             to: sortedFriend.origin.email,
-            subject: 'SORTEIO DE AMIGO INVISIVEL PARA O EVENTO DO DIA 22/12/2023',
+            subject: `${eventName} ${eventDate}`,
             text: `Seu amigo invisivel é ${sortedFriend.selected.name} `
         }
 
@@ -36,7 +38,7 @@ const sendEmail = async (
 }
 
 export const sortFriendsAndSendEmail = async () =>{
-    const sortedFriends = await selectFriends()
+    const {eventName, organizedSortedFriends: sortedFriends, eventDate} = await selectFriends()
     const acessToken = await oAuthClient.getAccessToken()
     const transport = nodemailer.createTransport({
         // @ts-ignore
@@ -51,7 +53,7 @@ export const sortFriendsAndSendEmail = async () =>{
         }
     })
     for (let sortedFriend of sortedFriends) {
-        await sendEmail(transport, sortedFriend)
+        await sendEmail(transport, sortedFriend, eventName, eventDate)
     }
     console.log("Amigo secreto sorteado e emails enviados")
 }

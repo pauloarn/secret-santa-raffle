@@ -6,6 +6,12 @@ export interface OrganizedAndSortedFriends {
     origin: FriendsDataWithId
     selected: FriendsDataWithId
 }
+
+export interface AppDataInterface {
+    eventName: string
+    eventDate: string
+    friendsList: FriendsData[]
+}
 export interface FriendsData{
     name: string
     email: string
@@ -17,16 +23,17 @@ export interface FriendsDataWithId extends FriendsData{
 
 
 
-const getFriendsFromFile = async () =>{
-    const fileString = await fs.readFileSync('./data/responses.json',  {encoding:'utf8', flag:'r'})
-    const friendsList: FriendsData[] = JSON.parse(fileString)
+const getAppData = async () =>{
+    const fileString = await fs.readFileSync('./appData.json',  {encoding:'utf8', flag:'r'})
+    const appData: AppDataInterface = JSON.parse(fileString)
 
-    return friendsList
+    return appData
 }
 
 
 export const selectFriends = async () =>{
-    const friendsList = await getFriendsFromFile()
+    const appData = await getAppData()
+    const friendsList = appData.friendsList
     const imutedFriends  = friendsList.map((f) => {
         return {
             ...f,
@@ -57,5 +64,9 @@ export const selectFriends = async () =>{
     })//Organize raffled friends with original data
 
     console.log('amigos sorteados')
-    return organizedSortedFriends
+    return {
+        eventName: appData.eventName,
+        eventDate: appData.eventDate,
+        organizedSortedFriends
+    }
 }
