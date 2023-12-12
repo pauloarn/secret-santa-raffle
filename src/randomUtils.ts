@@ -6,7 +6,8 @@ export const selectNumberInRange = (maxLimit: number) => {
 }
 
 export const getRandomItemFromArray = <T>(lista: T[]) => {
-    const randomIndex= selectNumberInRange(lista.length - 1)
+    const listaLength = lista.length
+    const randomIndex= selectNumberInRange(listaLength)
     return {
         index: randomIndex,
         item:lista[randomIndex]

@@ -1,5 +1,5 @@
 import {randomUUID} from "node:crypto";
-import {getRandomItemFromArray} from "../randomUtils";
+import { getRandomItemFromArray } from "./randomUtils";
 import fs from "fs";
 
 export interface OrganizedAndSortedFriends {
@@ -22,9 +22,9 @@ export interface FriendsDataWithId extends FriendsData{
 }
 
 
-
+//On file appData.json u will add each and every friend tha will participate on Secret Santa (Yours as well)
 const getAppData = async () =>{
-    const fileString = await fs.readFileSync('./appData.json',  {encoding:'utf8', flag:'r'})
+    const fileString = await fs.readFileSync('src/appData.json',  {encoding:'utf8', flag:'r'})
     const appData: AppDataInterface = JSON.parse(fileString)
 
     return appData
@@ -40,9 +40,9 @@ export const selectFriends = async () =>{
             id: randomUUID().toString()
         }
     }) //Assign a uuid to every friend on list for better selector
-    const friends: FriendsDataWithId[] = JSON.parse(JSON.stringify(imutedFriends))
     const selectedFriends:{origin: string, selected: string}[] = []
     imutedFriends.forEach((f) =>{
+        const friends: FriendsDataWithId[] = JSON.parse(JSON.stringify(imutedFriends))
         const friendsToSelect = friends.filter((fs) => f.id !== fs.id)
         const selectedFriend = getRandomItemFromArray(friendsToSelect)
         selectedFriends.push({

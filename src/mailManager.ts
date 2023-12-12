@@ -7,7 +7,8 @@ const envVars = {
     GOOGLE_SECRET_KEY: process.env.GOOGLE_SECRET_KEY,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
-    GOOGLE_REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN
+    GOOGLE_REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN,
+    GOOGLE_CLOUD_EMAIL_REGISTERED: process.env.GOOGLE_CLOUD_EMAIL_REGISTERED
 }
 
 const oAuthClient = new google.auth.OAuth2(envVars.GOOGLE_CLIENT_ID, envVars.GOOGLE_SECRET_KEY, envVars.GOOGLE_REDIRECT_URI)
@@ -24,7 +25,7 @@ const sendEmail = async (
 ) =>{
     try{
         const mailOptions = {
-            from: `SecretSanta Raffle '${eventName}' <ENTER HERE THE EMAIL REGISTERED ON GOOGLE CLOUD PLATFORM FOR OAUTH>`,
+            from: `SecretSanta Raffle '${eventName}' <${envVars.GOOGLE_CLOUD_EMAIL_REGISTERED}>`,
             to: sortedFriend.origin.email,
             subject: `${eventName} ${eventDate}`,
             text: `Seu amigo invisivel é ${sortedFriend.selected.name} `
@@ -45,7 +46,7 @@ export const sortFriendsAndSendEmail = async () =>{
         service: 'gmail',
         auth:{
             type: 'OAuth2',
-            user: 'ENTER HERE THE EMAIL REGISTERED ON GOOGLE CLOUD PLATFORM FOR OAUTH',
+            user: envVars.GOOGLE_CLOUD_EMAIL_REGISTERED,
             clientId: envVars.GOOGLE_CLIENT_ID,
             clientSecret: envVars.GOOGLE_SECRET_KEY,
             refreshToken: envVars.GOOGLE_REFRESH_TOKEN,

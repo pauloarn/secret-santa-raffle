@@ -2,7 +2,7 @@
 
 This project raffle friends on a list and send them to the email with the designated friend after the raffle
 
-## Add frineds to be raffled
+## Adding friends to be raffled
 
 Go to file `src/friendsList.json` and add Friends name and email
 
