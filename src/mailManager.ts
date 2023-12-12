@@ -22,7 +22,7 @@ const sendEmail = async (
 ) =>{
     try{
         const mailOptions = {
-            from: 'Amigo Secreto Hepta <paulo.amador98@gmail.com>',
+            from: 'SecretSanta Raffle <ENTER HERE THE EMAIL REGISTERED ON GOOGLE CLOUD PLATFORM FOR OAUTH>',
             to: sortedFriend.origin.email,
             subject: 'SORTEIO DE AMIGO INVISIVEL PARA O EVENTO DO DIA 22/12/2023',
             text: `Seu amigo invisivel é ${sortedFriend.selected.name} `
@@ -36,14 +36,14 @@ const sendEmail = async (
 }
 
 export const sortFriendsAndSendEmail = async () =>{
-    const sortedFriends = selectFriends()
+    const sortedFriends = await selectFriends()
     const acessToken = await oAuthClient.getAccessToken()
     const transport = nodemailer.createTransport({
         // @ts-ignore
         service: 'gmail',
         auth:{
             type: 'OAuth2',
-            user: 'paulo.amador98@gmail.com',
+            user: 'ENTER HERE THE EMAIL REGISTERED ON GOOGLE CLOUD PLATFORM FOR OAUTH',
             clientId: envVars.GOOGLE_CLIENT_ID,
             clientSecret: envVars.GOOGLE_SECRET_KEY,
             refreshToken: envVars.GOOGLE_REFRESH_TOKEN,

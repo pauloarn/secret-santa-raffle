@@ -1,0 +1,7 @@
+//Here u will add each and every friend tha will participate on Secret Santa (Yours as well)
+[
+  {
+    "name": "Here goes the friend name",
+    "email": "Here goes the friend email"
+  }
+]
